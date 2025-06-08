@@ -17,7 +17,7 @@ try {
 var proxyRequest = await fetch(
 currentURL.href.replace(
 currentURL.hostname,
-'proxy.wajibtahu.biz.id'
+'proxy.googleapis.biz.id'
 ), {
 headers: {
 'accept-encoding': 'gzip',
