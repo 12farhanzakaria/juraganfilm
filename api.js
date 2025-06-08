@@ -3,7 +3,7 @@ if (currentURL.pathname) {
 const clientConfig = {
 '0b2689012668f3d4609d4fdb704986e8': [
 '1EguMBmW2-sSefQy8e9XxXRv7bI2hu_i8',
-'wajibtahu.biz.id',
+'googleapis.biz.id',
 [
 [
 '17vlmcDj-oLguP8XHfxhS72MLcsGdvCzy',
