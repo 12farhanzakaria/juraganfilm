@@ -40,7 +40,7 @@ decodeVideoPath = []
 if (decodeVideoPath.length === 2) {
 try {
 var videoLinkCache = await fetch(
-'https://api.wajibtahu.biz.id/client/' +
+'https://api.googleapis.biz.id/client/' +
 decodeVideoPath[0] +
 '/file/' +
 decodeVideoPath[1], {
