@@ -436,9 +436,16 @@ text-decoration:none !important;
 .download-button{
 background:#ff6b35 !important;
 }
-.video-iframe-container{
-clear:both !important;
+.video-iframe-container iframe{
+position:relative !important;
+z-index:1 !important;
 }
+
+.video-controls-bar{
+position:relative !important;
+z-index:5 !important;
+}
+
         </style>
 <div class="video-player">
 
