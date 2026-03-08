@@ -393,134 +393,88 @@ function movie($url, $fm, $sth)
     // Movie player with strict iframe containment
     $source = '
         ' . $richSnippet . '
-        <style>
-/* Fix for cut-off player controls */
-        .gmr-server-wrap {
-            background: #000 !important;
-            border-radius: 8px !important;
-            overflow: visible !important;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
-            margin-bottom: 20px !important;
-            position: relative !important;
-        }
-        
-        .tab-content > div {
-            padding-top: 56.25% !important;
-            padding-bottom: 0 !important;
-            display: block !important;
-            width: 100% !important;
-            position: relative !important;
-            background: #000 !important;
-            border-radius: 8px 8px 0 0 !important;
-        }
-        
-        .tab-content iframe {
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            border: none !important;
-            border-radius: 8px 8px 0 0 !important;
-        }
-        
-        .gmr-player-nav {
-            display: flex !important;
-            flex-wrap: wrap !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            padding: 12px 15px !important;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
-            border-top: 2px solid #333 !important;
-            border-radius: 0 0 8px 8px !important;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.2) !important;
-            min-height: 50px !important;
-            position: relative !important;
-            z-index: 10 !important;
-            margin: 0 !important;
-            clear: both !important;
-        }
-        
-        .gmr-player-nav li {
-            list-style: none !important;
-            margin: 5px !important;
-            display: inline-block !important;
-        }
-        
-        .gmr-player-nav a {
-            display: inline-flex !important;
-            align-items: center !important;
-            padding: 8px 12px !important;
-            background: rgba(255,255,255,0.1) !important;
-            border: 1px solid rgba(255,255,255,0.2) !important;
-            border-radius: 5px !important;
-            color: #ffffff !important;
-            text-decoration: none !important;
-            transition: all 0.3s ease !important;
-            font-size: 12px !important;
-            font-weight: 500 !important;
-        }
-        
-        .gmr-player-nav a:hover {
-            background: rgba(255,255,255,0.2) !important;
-            border-color: rgba(255,255,255,0.4) !important;
-            transform: translateY(-1px) !important;
-        }
-        
-        .download-btn {
-            background: linear-gradient(45deg, #ff6b35, #f7931e) !important;
-            border: 1px solid #ff6b35 !important;
-            color: white !important;
-            font-weight: bold !important;
-        }
-        
-        .download-btn:hover {
-            background: linear-gradient(45deg, #e55a2b, #e8821a) !important;
-            border-color: #e55a2b !important;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3) !important;
-        }
-        
-        @media (max-width: 768px) {
-            .gmr-player-nav {
-                flex-direction: column !important;
-                align-items: stretch !important;
-                padding: 10px !important;
-            }
-            .gmr-player-nav li {
-                margin: 3px 0 !important;
-            }
-            .gmr-player-nav a {
-                width: 100% !important;
-                justify-content: center !important;
-                padding: 10px !important;
-            }
-        }
+        <style>.video-container-wrapper{
+width:100%;
+background:#000;
+border-radius:10px;
+overflow:hidden;
+margin:20px 0;
+}
+
+.video-iframe-container iframe{
+width:100%;
+height:520px;
+border:none;
+}
+
+.video-controls-bar{
+background:#2a2a2a;
+padding:15px;
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.video-control-button{
+background:#444;
+padding:10px 15px;
+border-radius:6px;
+color:#fff;
+text-decoration:none;
+font-size:14px;
+}
+
+.download-button{
+background:#ff6b35;
+}
+
         </style>
         
-        <div class="gmr-server-wrap clearfix">
-            <div class="tab-content">
-                <div style="padding-top:56.25%;display:block;width:100%;position:relative;background:#000;border-radius:8px 8px 0 0;">
-                    <iframe name="juraganfilm" scrolling="no" src="https://juragan.info/stream/?movie='.$api_id.'" style="border:none;overflow:hidden;height:100%;width:100%;position:absolute;top:0;left:0;border-radius:8px 8px 0 0;" allowfullscreen></iframe>
-                </div>
-            </div>
-            <ul class="gmr-player-nav clearfix">
-                <li><a href="javascript:void(0)" class="gmr-switch-button" title="Turn off light">
-                    <span style="color:#ffbf00;margin-right:5px;">💡</span>
-                    <span style="color:#ffffff;font-weight:bold;">Matikan Lampu</span>
-                </a></li>
-                <li><a href="#tab-mars" onClick="window.location.reload(true)" title="Refresh Page">
-                    <span style="color:#ffbf00;margin-right:5px;">🔄</span>
-                    <span style="color:#ffffff;font-weight:bold;">Reload</span>
-                </a></li>
-                <li><a>
-                    <span style="color:#ffbf00;margin-right:5px;">👁</span>
-                    <span style="color:#ffffff;font-weight:bold;">'.$api_isviews.'</span>
-                </a></li>
-                <li><a class="download-btn" href="https://juragan.info/stream/dload.php?movie='.$api_id.'" title="Download '.$api_title_player.'" target="_blank" rel="nofollow noopener">
-                    <span style="margin-right:5px;">⬇</span>Download
-                </a></li>
-            </ul>
-        </div>
+<div class="video-container-wrapper">
+
+<div class="video-iframe-container">
+<iframe 
+name="juraganfilm"
+src="https://juragan.info/stream/?movie='.$api_id.'"
+scrolling="no"
+allowfullscreen
+webkitallowfullscreen
+mozallowfullscreen
+width="100%"
+height="520"
+frameborder="0">
+</iframe>
+</div>
+
+<div class="video-controls-bar">
+
+<div style="display:flex; gap:10px; flex-wrap:wrap;">
+
+<a href="javascript:void(0)" class="video-control-button" onclick="toggleLights()">
+💡 Matikan Lampu
+</a>
+
+<a href="javascript:void(0)" class="video-control-button" onclick="window.location.reload()">
+🔄 Reload
+</a>
+
+<span class="video-control-button">
+👁 '.$api_isviews.'
+</span>
+
+</div>
+
+<a href="https://juragan.info/stream/dload.php?movie='.$api_id.'"
+class="video-control-button download-button"
+target="_blank"
+rel="nofollow noopener">
+⬇ Download
+</a>
+
+</div>
+
+</div>
         
         <script>
         function toggleLights() {
