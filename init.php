@@ -394,137 +394,106 @@ function movie($url, $fm, $sth)
     $source = '
         ' . $richSnippet . '
         <style>
-        /* Strict iframe containment styles */
-        .video-container-wrapper {
+/* Fix for cut-off player controls */
+        .gmr-server-wrap {
+            background: #000 !important;
+            border-radius: 8px !important;
+            overflow: visible !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+            margin-bottom: 20px !important;
             position: relative !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            background: #000 !important;
-            border-radius: 12px !important;
-            overflow: hidden !important;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
-            margin: 20px 0 !important;
-            border: 3px solid #1a1a1a !important;
-            box-sizing: border-box !important;
         }
         
-        .video-iframe-container {
+        .tab-content > div {
+            padding-top: 56.25% !important;
+            padding-bottom: 0 !important;
+            display: block !important;
+            width: 100% !important;
             position: relative !important;
-            width: 100% !important;
-            height: 0 !important;
-            padding-bottom: 56.25% !important;
             background: #000 !important;
-            overflow: hidden !important;
-            border-radius: 9px 9px 0 0 !important;
+            border-radius: 8px 8px 0 0 !important;
         }
         
-        .video-iframe-container iframe {
-            position: absolute !important;
-            top: 2px !important;
-            left: 2px !important;
-            width: calc(100% - 4px) !important;
-            height: calc(100% - 4px) !important;
-            border: none !important;
-            border-radius: 7px 7px 0 0 !important;
-            background: #000 !important;
-            overflow: hidden !important;
-            /* Force strict containment */
-            clip-path: inset(0 round 7px 7px 0 0) !important;
-            transform: translateZ(0) !important;
-            will-change: transform !important;
-        }
-        
-        /* Create a mask overlay to ensure containment */
-        .video-iframe-container::before {
-            content: "" !important;
+        .tab-content iframe {
             position: absolute !important;
             top: 0 !important;
             left: 0 !important;
-            right: 0 !important;
-            bottom: 0 !important;
-            border: 2px solid #000 !important;
-            border-radius: 9px 9px 0 0 !important;
-            pointer-events: none !important;
-            z-index: 1 !important;
-            box-sizing: border-box !important;
+            width: 100% !important;
+            height: 100% !important;
+            border: none !important;
+            border-radius: 8px 8px 0 0 !important;
         }
         
-        .video-controls-bar {
-            background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%) !important;
-            padding: 15px 20px !important;
+        .gmr-player-nav {
             display: flex !important;
+            flex-wrap: wrap !important;
             align-items: center !important;
             justify-content: space-between !important;
-            flex-wrap: wrap !important;
-            gap: 10px !important;
-            border-top: 1px solid #333 !important;
-            border-radius: 0 0 9px 9px !important;
+            padding: 12px 15px !important;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
+            border-top: 2px solid #333 !important;
+            border-radius: 0 0 8px 8px !important;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2) !important;
+            min-height: 50px !important;
+            position: relative !important;
+            z-index: 10 !important;
+            margin: 0 !important;
+            clear: both !important;
         }
         
-        .video-control-button {
-            background: rgba(255,255,255,0.1) !important;
-            border: 1px solid rgba(255,255,255,0.2) !important;
-            border-radius: 8px !important;
-            padding: 10px 15px !important;
-            color: #ffffff !important;
-            text-decoration: none !important;
+        .gmr-player-nav li {
+            list-style: none !important;
+            margin: 5px !important;
+            display: inline-block !important;
+        }
+        
+        .gmr-player-nav a {
             display: inline-flex !important;
             align-items: center !important;
-            gap: 8px !important;
-            font-size: 13px !important;
-            font-weight: 500 !important;
+            padding: 8px 12px !important;
+            background: rgba(255,255,255,0.1) !important;
+            border: 1px solid rgba(255,255,255,0.2) !important;
+            border-radius: 5px !important;
+            color: #ffffff !important;
+            text-decoration: none !important;
             transition: all 0.3s ease !important;
-            cursor: pointer !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
         }
         
-        .video-control-button:hover {
+        .gmr-player-nav a:hover {
             background: rgba(255,255,255,0.2) !important;
             border-color: rgba(255,255,255,0.4) !important;
             transform: translateY(-1px) !important;
-            color: #ffffff !important;
-            text-decoration: none !important;
         }
         
-        .download-button {
+        .download-btn {
             background: linear-gradient(45deg, #ff6b35, #f7931e) !important;
             border: 1px solid #ff6b35 !important;
             color: white !important;
             font-weight: bold !important;
         }
         
-        .download-button:hover {
+        .download-btn:hover {
             background: linear-gradient(45deg, #e55a2b, #e8821a) !important;
             border-color: #e55a2b !important;
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4) !important;
-            color: white !important;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3) !important;
         }
         
-        /* Mobile responsive */
         @media (max-width: 768px) {
-            .video-controls-bar {
+            .gmr-player-nav {
                 flex-direction: column !important;
-                gap: 8px !important;
+                align-items: stretch !important;
+                padding: 10px !important;
             }
-            
-            .video-control-button {
+            .gmr-player-nav li {
+                margin: 3px 0 !important;
+            }
+            .gmr-player-nav a {
                 width: 100% !important;
                 justify-content: center !important;
-                padding: 12px !important;
+                padding: 10px !important;
             }
-            
-            .video-iframe-container {
-                border-radius: 6px 6px 0 0 !important;
-            }
-            
-            .video-iframe-container iframe {
-                border-radius: 4px 4px 0 0 !important;
-            }
-        }
-        
-        /* Prevent any overflow */
-        .video-container-wrapper,
-        .video-container-wrapper * {
-            box-sizing: border-box !important;
         }
         </style>
         
