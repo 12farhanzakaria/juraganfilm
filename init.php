@@ -430,10 +430,7 @@ background:#ff6b35;
 }
 
         </style>
-        
-<div class="video-container-wrapper">
-
-<div class="video-iframe-container">
+        <div class="video-iframe-container">
 <iframe 
 name="juraganfilm"
 src="https://juragan.info/stream/?movie='.$api_id.'"
@@ -446,6 +443,9 @@ height="520"
 frameborder="0">
 </iframe>
 </div>
+<div class="video-container-wrapper">
+
+
 
 <div class="video-controls-bar">
 
