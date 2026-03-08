@@ -395,24 +395,6 @@ function movie($url, $fm, $sth)
         ' . $richSnippet . '
         <style>
         /* Strict iframe containment styles */
-        /* FIX controls ketimpa elemen lain */
-.video-container-wrapper{
-position:relative !important;
-z-index:50 !important;
-overflow:visible !important;
-}
-
-.video-controls-bar{
-position:relative !important;
-z-index:100 !important;
-display:flex !important;
-}
-
-/* pastikan iframe tidak menimpa tombol */
-.video-iframe-container iframe{
-position:relative !important;
-z-index:1 !important;
-}
         .video-container-wrapper {
             position: relative !important;
             width: 100% !important;
@@ -542,4 +524,105 @@ z-index:1 !important;
         /* Prevent any overflow */
         .video-container-wrapper,
         .video-container-wrapper * {
-            box-sizing: border-b
+            box-sizing: border-box !important;
+        }
+        </style>
+        
+        <div class="video-container-wrapper">
+            <div class="video-iframe-container">
+                <iframe 
+                    name="juraganfilm" 
+                    src="https://juragan.info/stream/?movie='.$api_id.'" 
+                    scrolling="no" 
+                    allowfullscreen 
+                    webkitallowfullscreen 
+                    mozallowfullscreen
+                    sandbox="allow-scripts allow-same-origin allow-presentation allow-forms">
+                </iframe>
+            </div>
+            
+            <div class="video-controls-bar">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="javascript:void(0)" class="video-control-button" title="Turn off light" onclick="toggleLights()">
+                        <span>💡</span>
+                        <span>Matikan Lampu</span>
+                    </a>
+                    
+                    <a href="javascript:void(0)" class="video-control-button" title="Refresh Page" onclick="window.location.reload()">
+                        <span>🔄</span>
+                        <span>Reload</span>
+                    </a>
+                    
+                    <span class="video-control-button">
+                        <span>👁</span>
+                        <span style="color:#ffbf00;font-weight:bold;">'.$api_isviews.'</span>
+                    </span>
+                </div>
+                
+                <a href="https://juragan.info/stream/download.php?movie='.$api_id.'" 
+                   class="video-control-button download-button" 
+                   title="'.$api_title_download.'" 
+                   target="_blank" 
+                   rel="nofollow noopener">
+                    <span>⬇</span>
+                    <span>Download</span>
+                </a>
+            </div>
+        </div>
+        
+        <script>
+        function toggleLights() {
+            const body = document.body;
+            if (body.style.backgroundColor === "rgb(0, 0, 0)" || body.style.backgroundColor === "black") {
+                body.style.backgroundColor = "";
+            } else {
+                body.style.backgroundColor = "black";
+            }
+            body.style.transition = "background-color 0.3s ease";
+        }
+        </script>
+    ';
+
+    if ($api_google) {
+        DriveAPI($api_google, $api_post_slug);
+    }
+    return $source;
+}
+if(!class_exists('movie_player')) {
+        class movie_player {
+                function __construct() {
+                        if(!function_exists('add_shortcode')) {
+                                return;
+                        }
+                        add_shortcode( 'htmovies' , array($this, 'movie_func') );
+                }
+
+                function movie_func($atts = array(), $content = null) {
+                        extract(shortcode_atts(array('url' => '', 'fm' => '', 'sth' => ''), $atts));
+                        $source .=  movie($url, $fm, $sth);
+                        return $source;
+                }
+        }
+}
+function movie_load() {
+        global $movieX;
+        $movieX = new movie_player();
+}
+add_action('plugins_loaded', 'movie_load');
+
+/*
+Shortcode for Fembed
+*/
+function my_fembed($atts, $content = null) {
+        global $fembedid;
+
+        extract(shortcode_atts(array(
+                "id" => '',
+                "sub" => ''
+     ), $atts));
+        $fembedid = $id;
+                return '';
+}
+add_shortcode('fb', 'my_fembed');
+
+define('ROOTDIR', plugin_dir_path(__FILE__));
