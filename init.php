@@ -393,91 +393,72 @@ function movie($url, $fm, $sth)
     // Movie player with strict iframe containment
     $source = '
         ' . $richSnippet . '
-        <style>.video-player{
-width:100%;
-margin:20px 0;
-background:#000;
-border-radius:10px;
-overflow:hidden;
+        <style>
+/* paksa iframe jadi elemen normal */
+.video-iframe-container iframe,
+.video-player iframe{
+position:relative !important;
+display:block !important;
+width:100% !important;
+height:520px !important;
+border:none !important;
+z-index:1 !important;
 }
 
-/* iframe */
-.video-iframe-container iframe{
-width:100%;
-height:520px;
-border:none;
-display:block;
+/* wrapper player */
+.video-container-wrapper,
+.video-player{
+position:relative !important;
+overflow:visible !important;
+width:100% !important;
 }
 
-/* controls */
+/* controls selalu di atas */
 .video-controls-bar{
-background:#2a2a2a;
-padding:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-gap:10px;
+position:relative !important;
+z-index:999 !important;
+background:#2a2a2a !important;
+padding:15px !important;
+display:flex !important;
+flex-wrap:wrap !important;
+gap:10px !important;
 }
 
-.controls-left{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
+/* tombol */
 .video-control-button{
-background:#444;
-padding:10px 15px;
-border-radius:6px;
-color:#fff;
-text-decoration:none;
-font-size:14px;
+background:#444 !important;
+padding:10px 15px !important;
+border-radius:6px !important;
+color:#fff !important;
+text-decoration:none !important;
 }
 
 .download-button{
-background:#ff6b35;
+background:#ff6b35 !important;
 }
-
+.video-iframe-container{
+clear:both !important;
+}
         </style>
 <div class="video-player">
 
-<div class="video-iframe-container">
 <iframe 
 name="juraganfilm"
 src="https://juragan.info/stream/?movie='.$api_id.'"
 scrolling="no"
 allowfullscreen
-webkitallowfullscreen
-mozallowfullscreen
 frameborder="0">
 </iframe>
-</div>
 
 <div class="video-controls-bar">
 
-<div class="controls-left">
+<a href="javascript:void(0)" class="video-control-button" onclick="toggleLights()">💡 Lampu</a>
 
-<a href="javascript:void(0)" class="video-control-button" onclick="toggleLights()">
-💡 Matikan Lampu
-</a>
+<a href="javascript:void(0)" class="video-control-button" onclick="location.reload()">🔄 Reload</a>
 
-<a href="javascript:void(0)" class="video-control-button" onclick="window.location.reload()">
-🔄 Reload
-</a>
+<span class="video-control-button">👁 '.$api_isviews.'</span>
 
-<span class="video-control-button">
-👁 '.$api_isviews.'
-</span>
-
-</div>
-
-<a href="https://juragan.info/stream/dload.php?movie='.$api_id.'"
-class="video-control-button download-button"
-target="_blank"
-rel="nofollow noopener">
-⬇ Download
-</a>
+<a href="https://juragan.info/stream/dload.php?movie='.$api_id.'" class="video-control-button download-button">⬇ Download</a>
 
 </div>
 
