@@ -393,27 +393,37 @@ function movie($url, $fm, $sth)
     // Movie player with strict iframe containment
     $source = '
         ' . $richSnippet . '
-        <style>.video-container-wrapper{
+        <style>.video-player{
 width:100%;
+margin:20px 0;
 background:#000;
 border-radius:10px;
 overflow:hidden;
-margin:20px 0;
 }
 
+/* iframe */
 .video-iframe-container iframe{
 width:100%;
 height:520px;
 border:none;
+display:block;
 }
 
+/* controls */
 .video-controls-bar{
 background:#2a2a2a;
 padding:15px;
 display:flex;
 justify-content:space-between;
+align-items:center;
 flex-wrap:wrap;
 gap:10px;
+}
+
+.controls-left{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
 }
 
 .video-control-button{
@@ -430,7 +440,9 @@ background:#ff6b35;
 }
 
         </style>
-        <div class="video-iframe-container">
+<div class="video-player">
+
+<div class="video-iframe-container">
 <iframe 
 name="juraganfilm"
 src="https://juragan.info/stream/?movie='.$api_id.'"
@@ -438,18 +450,13 @@ scrolling="no"
 allowfullscreen
 webkitallowfullscreen
 mozallowfullscreen
-width="100%"
-height="520"
 frameborder="0">
 </iframe>
 </div>
-<div class="video-container-wrapper">
-
-
 
 <div class="video-controls-bar">
 
-<div style="display:flex; gap:10px; flex-wrap:wrap;">
+<div class="controls-left">
 
 <a href="javascript:void(0)" class="video-control-button" onclick="toggleLights()">
 💡 Matikan Lampu
