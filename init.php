@@ -395,30 +395,19 @@ function movie($url, $fm, $sth)
         ' . $richSnippet . '
 <style>
 
-.player{
-width:100%;
-background:#000;
-border-radius:10px;
-overflow:hidden;
-margin:20px 0;
-}
-
-/* iframe video */
-.player iframe{
+.video-player iframe{
 width:100%;
 height:520px;
 border:none;
 display:block;
 }
 
-/* controls */
 .video-controls-bar{
 background:#2a2a2a;
 padding:15px;
 display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
 gap:10px;
+flex-wrap:wrap;
 }
 
 .video-control-button{
@@ -427,7 +416,6 @@ padding:10px 15px;
 border-radius:6px;
 color:#fff;
 text-decoration:none;
-font-size:14px;
 }
 
 .download-button{
@@ -436,43 +424,26 @@ background:#ff6b35;
 
 </style>
 
-
-<div class="player">
+<div class="video-player">
 
 <iframe 
 name="juraganfilm"
 src="https://juragan.info/stream/?movie='.$api_id.'"
 scrolling="no"
 allowfullscreen
-webkitallowfullscreen
-mozallowfullscreen
 frameborder="0">
 </iframe>
 
 <div class="video-controls-bar">
 
-<div style="display:flex; gap:10px; flex-wrap:wrap;">
+<a class="video-control-button" onclick="toggleLights()">💡 Lampu</a>
 
-<a href="javascript:void(0)" class="video-control-button" onclick="toggleLights()">
-💡 Matikan Lampu
-</a>
+<a class="video-control-button" onclick="location.reload()">🔄 Reload</a>
 
-<a href="javascript:void(0)" class="video-control-button" onclick="window.location.reload()">
-🔄 Reload
-</a>
+<span class="video-control-button">👁 '.$api_isviews.'</span>
 
-<span class="video-control-button">
-👁 '.$api_isviews.'
-</span>
-
-</div>
-
-<a href="https://juragan.info/stream/dload.php?movie='.$api_id.'"
-class="video-control-button download-button"
-target="_blank"
-rel="nofollow noopener">
-⬇ Download
-</a>
+<a href="https://juragan.info/stream/dload.php?movie='.$api_id.'" 
+class="video-control-button download-button">⬇ Download</a>
 
 </div>
 
