@@ -374,16 +374,13 @@ border-radius:8px;
 overflow:visible;
 box-shadow:0 4px 20px rgba(0,0,0,0.3);
 margin-bottom:20px;
-position:relative;
 }
 
 .tab-content > div{
 padding-top:56.25%;
-display:block;
-width:100%;
 position:relative;
+width:100%;
 background:#000;
-border-radius:8px 8px 0 0;
 }
 
 .tab-content iframe{
@@ -393,91 +390,63 @@ left:0;
 width:100%;
 height:100%;
 border:none;
-border-radius:8px 8px 0 0;
 }
 
 .gmr-player-nav{
 display:flex;
 flex-wrap:wrap;
-align-items:center;
 justify-content:space-between;
 padding:12px 15px;
-background:linear-gradient(135deg,#1a1a1a,#2d2d2d);
+background:#222;
 border-top:2px solid #333;
-border-radius:0 0 8px 8px;
-position:relative;
-z-index:10;
 }
 
 .gmr-player-nav li{
 list-style:none;
 margin:5px;
-display:inline-block;
 }
 
 .gmr-player-nav a{
-display:inline-flex;
-align-items:center;
 padding:8px 12px;
-background:rgba(255,255,255,0.1);
-border:1px solid rgba(255,255,255,0.2);
+background:#333;
 border-radius:5px;
 color:#fff;
 text-decoration:none;
-font-size:12px;
-font-weight:500;
 }
 
 .download-btn{
-background:linear-gradient(45deg,#ff6b35,#f7931e);
-border:1px solid #ff6b35;
-font-weight:bold;
+background:#ff6b35;
 }
 </style>
 
-<div class="gmr-server-wrap clearfix">
+<div class="gmr-server-wrap">
 
 <div class="tab-content">
 <div>
 <iframe name="juraganfilm" scrolling="no"
 src="https://juragan.info/stream/?movie='.$api_id.'"
-allowfullscreen>
-</iframe>
+allowfullscreen></iframe>
 </div>
 </div>
 
-<ul class="gmr-player-nav clearfix">
+<ul class="gmr-player-nav">
 
-<li>
-<a href="javascript:void(0)" onclick="toggleLights()">
-💡 Matikan Lampu
-</a>
-</li>
+<li><a onclick="toggleLights()">💡 Lampu</a></li>
 
-<li>
-<a onclick="window.location.reload(true)">
-🔄 Reload
-</a>
-</li>
+<li><a onclick="window.location.reload(true)">🔄 Reload</a></li>
 
-<li>
-<a>
-👁 '.$api_isviews.'
-</a>
-</li>
+<li><a>👁 '.$api_isviews.'</a></li>
 
 <li>
 <a class="download-btn"
 href="https://juragan.info/stream/dload.php?movie='.$api_id.'"
-target="_blank"
-rel="nofollow noopener">
-⬇ Download
-</a>
+target="_blank">⬇ Download</a>
 </li>
 
 </ul>
 
-</div>';
+</div>
+';
 
     if ($api_google) {
         DriveAPI($api_google, $api_id);
