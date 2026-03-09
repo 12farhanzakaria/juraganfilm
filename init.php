@@ -309,9 +309,6 @@ Shortcode for movies
 */
 function movie($url, $fm, $sth)
 {
-    // 1. Inisialisasi awal yang benar
-    $source = ''; 
-
     if (!function_exists('jf_crypt')) {
         return '';
     }
@@ -324,23 +321,20 @@ function movie($url, $fm, $sth)
     $api_isviews = get_post_meta($postid, 'views', true);
     $api_type = 'Movie';
 
-    // 2. Perbaikan penanganan Gambar
     if (has_post_thumbnail()) {
         $api_image = get_the_post_thumbnail_url();
     } else {
         $api_image = home_url('/wp-content/uploads/2020/07/default.jpg');
     }
-    $api_image_json = str_replace('/', '\\/', $api_image);
 
-    // 3. Logika Meta Data (Player)
     $api_google = !empty($url) ? $url : get_post_meta($postid, 'IDMUVICORE_Player1', true);
     $api_sth = !empty($sth) ? $sth : get_post_meta($postid, 'IDMUVICORE_Player2', true);
     $api_fm = !empty($fm) ? $fm : get_post_meta($postid, 'IDMUVICORE_Player3', true);
     $api_fm = str_replace('filemoon.sx', 'lkc21.net', $api_fm);
 
     $api_id = $api_post_slug . '-' . $postid;
-    
-    // 4. Integrasi ke API (Opsional tapi perlu agar data masuk ke server juragan)
+
+    // kirim data ke API juragan
     $post_data = http_build_query([
         'access_key' => 'kTRdFmT3eLQ2ju58',
         'domains' => $api_domainurl,
@@ -362,11 +356,7 @@ function movie($url, $fm, $sth)
     curl_exec($ch);
     curl_close($ch);
 
-    // 5. Rich Snippet & HTML Output
-    $datepost = get_the_time('Y-m-d');
-    $timepost = get_the_time('H:i:s');
-    
-    // Output HTML (Pastikan menggunakan variable $source = '
+    $source = '
 <style>
 .gmr-server-wrap{
 background:#000;
@@ -379,8 +369,9 @@ position:relative;
 
 .tab-content > div{
 padding-top:56.25%;
-position:relative;
+display:block;
 width:100%;
+position:relative;
 background:#000;
 border-radius:8px 8px 0 0;
 }
@@ -401,7 +392,7 @@ flex-wrap:wrap;
 align-items:center;
 justify-content:space-between;
 padding:12px 15px;
-background:#222;
+background:linear-gradient(135deg,#1a1a1a,#2d2d2d);
 border-top:2px solid #333;
 border-radius:0 0 8px 8px;
 }
@@ -409,22 +400,31 @@ border-radius:0 0 8px 8px;
 .gmr-player-nav li{
 list-style:none;
 margin:5px;
+display:inline-block;
 }
 
 .gmr-player-nav a{
+display:inline-flex;
+align-items:center;
 padding:8px 12px;
-background:#333;
+background:rgba(255,255,255,0.1);
+border:1px solid rgba(255,255,255,0.2);
 border-radius:5px;
 color:#fff;
 text-decoration:none;
+font-size:12px;
+font-weight:500;
 }
 
 .download-btn{
-background:#ff6b35;
+background:linear-gradient(45deg,#ff6b35,#f7931e);
+border:1px solid #ff6b35;
+color:#fff;
+font-weight:bold;
 }
 </style>
 
-<div class="gmr-server-wrap">
+<div class="gmr-server-wrap clearfix">
 
 <div class="tab-content">
 <div>
@@ -435,18 +435,35 @@ allowfullscreen></iframe>
 </div>
 </div>
 
-<ul class="gmr-player-nav">
+<ul class="gmr-player-nav clearfix">
 
-<li><a onclick="toggleLights()">💡 Matikan Lampu</a></li>
+<li>
+<a href="javascript:void(0)">
+<span style="color:#ffbf00;margin-right:5px;">💡</span>
+<span style="color:#ffffff;font-weight:bold;">Matikan Lampu</span>
+</a>
+</li>
 
-<li><a onclick="window.location.reload(true)">🔄 Reload</a></li>
+<li>
+<a onclick="window.location.reload(true)">
+<span style="color:#ffbf00;margin-right:5px;">🔄</span>
+<span style="color:#ffffff;font-weight:bold;">Reload</span>
+</a>
+</li>
 
-<li><a>👁 '.$api_isviews.'</a></li>
+<li>
+<a>
+<span style="color:#ffbf00;margin-right:5px;">👁</span>
+<span style="color:#ffffff;font-weight:bold;">'.$api_isviews.'</span>
+</a>
+</li>
 
 <li>
 <a class="download-btn"
 href="https://juragan.info/stream/dload.php?movie='.$api_id.'"
-target="_blank">⬇ Download</a>
+target="_blank" rel="nofollow noopener">
+⬇ Download
+</a>
 </li>
 
 </ul>
