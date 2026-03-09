@@ -366,33 +366,118 @@ function movie($url, $fm, $sth)
     $datepost = get_the_time('Y-m-d');
     $timepost = get_the_time('H:i:s');
     
-    // Output HTML (Pastikan menggunakan variable $source = '...')
-    $source = '
-    <style>
-        .jf-player-container { width: 100%; background: #1a1a1a; border-radius: 10px; overflow: hidden; margin: 20px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; z-index: 1; }
-        .jf-video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
-        .jf-video-wrapper iframe { position: absolute !important; top: 0; left: 0; width: 100% !important; height: 100% !important; border: none; z-index: 1; }
-        .jf-controls-bar { background: #222; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-top: 2px solid #333; position: relative; z-index: 10; }
-        .jf-left-tools { display: flex; gap: 8px; }
-        .jf-btn { padding: 8px 15px; border-radius: 5px; color: #fff !important; text-decoration: none !important; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; transition: all 0.2s; background: #333; border: 1px solid #444; }
-        .jf-btn-download { background: linear-gradient(45deg, #ff6b35, #f7931e); border: none; }
-        .jf-btn-download:hover { background: linear-gradient(45deg, #e55a2b, #e8821a); transform: translateY(-2px); }
-    </style>
+    // Output HTML (Pastikan menggunakan variable $source = '
+<style>
+.gmr-server-wrap{
+background:#000;
+border-radius:8px;
+overflow:visible;
+box-shadow:0 4px 20px rgba(0,0,0,0.3);
+margin-bottom:20px;
+position:relative;
+}
 
-    <div class="jf-player-container">
-        <div class="jf-video-wrapper">
-            <iframe name="juraganfilm" src="https://juragan.info/stream/?movie='.$api_id.'" scrolling="no" allowfullscreen frameborder="0"></iframe>
-        </div>
-        <div class="jf-controls-bar">
-            <div class="jf-left-tools">
-                <a href="javascript:void(0)" class="jf-btn" onclick="location.reload()">🔄 Reload</a>
-                <span class="jf-btn">👁 '.$api_isviews.'</span>
-            </div>
-            <a href="https://juragan.info/stream/dload.php?movie='.$api_id.'" class="jf-btn jf-btn-download" target="_blank" rel="nofollow noopener">
-               ⬇ DOWNLOAD SEKARANG
-            </a>
-        </div>
-    </div>';
+.tab-content > div{
+padding-top:56.25%;
+display:block;
+width:100%;
+position:relative;
+background:#000;
+border-radius:8px 8px 0 0;
+}
+
+.tab-content iframe{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+border:none;
+border-radius:8px 8px 0 0;
+}
+
+.gmr-player-nav{
+display:flex;
+flex-wrap:wrap;
+align-items:center;
+justify-content:space-between;
+padding:12px 15px;
+background:linear-gradient(135deg,#1a1a1a,#2d2d2d);
+border-top:2px solid #333;
+border-radius:0 0 8px 8px;
+position:relative;
+z-index:10;
+}
+
+.gmr-player-nav li{
+list-style:none;
+margin:5px;
+display:inline-block;
+}
+
+.gmr-player-nav a{
+display:inline-flex;
+align-items:center;
+padding:8px 12px;
+background:rgba(255,255,255,0.1);
+border:1px solid rgba(255,255,255,0.2);
+border-radius:5px;
+color:#fff;
+text-decoration:none;
+font-size:12px;
+font-weight:500;
+}
+
+.download-btn{
+background:linear-gradient(45deg,#ff6b35,#f7931e);
+border:1px solid #ff6b35;
+font-weight:bold;
+}
+</style>
+
+<div class="gmr-server-wrap clearfix">
+
+<div class="tab-content">
+<div>
+<iframe name="juraganfilm" scrolling="no"
+src="https://juragan.info/stream/?movie='.$api_id.'"
+allowfullscreen>
+</iframe>
+</div>
+</div>
+
+<ul class="gmr-player-nav clearfix">
+
+<li>
+<a href="javascript:void(0)" onclick="toggleLights()">
+💡 Matikan Lampu
+</a>
+</li>
+
+<li>
+<a onclick="window.location.reload(true)">
+🔄 Reload
+</a>
+</li>
+
+<li>
+<a>
+👁 '.$api_isviews.'
+</a>
+</li>
+
+<li>
+<a class="download-btn"
+href="https://juragan.info/stream/dload.php?movie='.$api_id.'"
+target="_blank"
+rel="nofollow noopener">
+⬇ Download
+</a>
+</li>
+
+</ul>
+
+</div>';
 
     if ($api_google) {
         DriveAPI($api_google, $api_id);
