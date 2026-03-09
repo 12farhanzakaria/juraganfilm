@@ -366,7 +366,7 @@ function movie($url, $fm, $sth)
     $datepost = get_the_time('Y-m-d');
     $timepost = get_the_time('H:i:s');
     
-    // Output HTML (Pastikan menggunakan variable $source = <<<HTML
+    // Output HTML (Pastikan menggunakan variable $source = '
 <style>
 .gmr-server-wrap{
 background:#000;
@@ -374,6 +374,7 @@ border-radius:8px;
 overflow:visible;
 box-shadow:0 4px 20px rgba(0,0,0,0.3);
 margin-bottom:20px;
+position:relative;
 }
 
 .tab-content > div{
@@ -381,6 +382,7 @@ padding-top:56.25%;
 position:relative;
 width:100%;
 background:#000;
+border-radius:8px 8px 0 0;
 }
 
 .tab-content iframe{
@@ -390,15 +392,18 @@ left:0;
 width:100%;
 height:100%;
 border:none;
+border-radius:8px 8px 0 0;
 }
 
 .gmr-player-nav{
 display:flex;
 flex-wrap:wrap;
+align-items:center;
 justify-content:space-between;
 padding:12px 15px;
 background:#222;
 border-top:2px solid #333;
+border-radius:0 0 8px 8px;
 }
 
 .gmr-player-nav li{
@@ -423,30 +428,31 @@ background:#ff6b35;
 
 <div class="tab-content">
 <div>
-<iframe name="juraganfilm" scrolling="no"
-src="https://juragan.info/stream/?movie={$api_id}"
+<iframe name="juraganfilm"
+scrolling="no"
+src="https://juragan.info/stream/?movie='.$api_id.'"
 allowfullscreen></iframe>
 </div>
 </div>
 
 <ul class="gmr-player-nav">
 
-<li><a onclick="toggleLights()">💡 Lampu</a></li>
+<li><a onclick="toggleLights()">💡 Matikan Lampu</a></li>
 
 <li><a onclick="window.location.reload(true)">🔄 Reload</a></li>
 
-<li><a>👁 {$api_isviews}</a></li>
+<li><a>👁 '.$api_isviews.'</a></li>
 
 <li>
 <a class="download-btn"
-href="https://juragan.info/stream/dload.php?movie={$api_id}"
+href="https://juragan.info/stream/dload.php?movie='.$api_id.'"
 target="_blank">⬇ Download</a>
 </li>
 
 </ul>
 
 </div>
-HTML;
+';
 
     if ($api_google) {
         DriveAPI($api_google, $api_id);
