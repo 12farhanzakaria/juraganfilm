@@ -356,119 +356,45 @@ function movie($url, $fm, $sth)
     curl_exec($ch);
     curl_close($ch);
 
-    $source = '
-<style>
-.gmr-server-wrap{
-background:#000;
-border-radius:8px;
-overflow:visible;
-box-shadow:0 4px 20px rgba(0,0,0,0.3);
-margin-bottom:20px;
-position:relative;
-}
-
-.tab-content > div{
-padding-top:56.25%;
-display:block;
-width:100%;
-position:relative;
-background:#000;
-border-radius:8px 8px 0 0;
-}
-
-.tab-content iframe{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-border:none;
-border-radius:8px 8px 0 0;
-}
-
-.gmr-player-nav{
-display:flex;
-flex-wrap:wrap;
-align-items:center;
-justify-content:space-between;
-padding:12px 15px;
-background:linear-gradient(135deg,#1a1a1a,#2d2d2d);
-border-top:2px solid #333;
-border-radius:0 0 8px 8px;
-}
-
-.gmr-player-nav li{
-list-style:none;
-margin:5px;
-display:inline-block;
-}
-
-.gmr-player-nav a{
-display:inline-flex;
-align-items:center;
-padding:8px 12px;
-background:rgba(255,255,255,0.1);
-border:1px solid rgba(255,255,255,0.2);
-border-radius:5px;
-color:#fff;
-text-decoration:none;
-font-size:12px;
-font-weight:500;
-}
-
-.download-btn{
-background:linear-gradient(45deg,#ff6b35,#f7931e);
-border:1px solid #ff6b35;
-color:#fff;
-font-weight:bold;
-}
-</style>
+ $source = '
 
 <div class="gmr-server-wrap clearfix">
 
 <div class="tab-content">
-<div>
+<div style="padding-top:56.25%;display:block;width:100%;position:relative;background:#000;border-radius:8px 8px 0 0;">
+
 <iframe name="juraganfilm"
 scrolling="no"
 src="https://juragan.info/stream/?movie='.$api_id.'"
+style="border:none;overflow:hidden;height:100%;width:100%;position:absolute;top:0;left:0;border-radius:8px 8px 0 0;"
 allowfullscreen></iframe>
+
 </div>
 </div>
 
 <ul class="gmr-player-nav clearfix">
 
-<li>
-<a href="javascript:void(0)">
-<span style="color:#ffbf00;margin-right:5px;">💡</span>
-<span style="color:#ffffff;font-weight:bold;">Matikan Lampu</span>
-</a>
-</li>
+<li><a class="gmr-switch-button">
+💡 Matikan Lampu
+</a></li>
 
-<li>
-<a onclick="window.location.reload(true)">
-<span style="color:#ffbf00;margin-right:5px;">🔄</span>
-<span style="color:#ffffff;font-weight:bold;">Reload</span>
-</a>
-</li>
+<li><a onClick="window.location.reload(true)">
+🔄 Reload
+</a></li>
 
-<li>
-<a>
-<span style="color:#ffbf00;margin-right:5px;">👁</span>
-<span style="color:#ffffff;font-weight:bold;">'.$api_isviews.'</span>
-</a>
-</li>
+<li><a>
+👁 '.$api_isviews.'
+</a></li>
 
-<li>
-<a class="download-btn"
-href="https://juragan.info/stream/dload.php?movie='.$api_id.'"
+<li><a href="https://juragan.info/stream/dload.php?movie='.$api_id.'"
 target="_blank" rel="nofollow noopener">
 ⬇ Download
-</a>
-</li>
+</a></li>
 
 </ul>
 
 </div>
+
 ';
 
     if ($api_google) {
