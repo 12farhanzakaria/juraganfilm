@@ -366,7 +366,7 @@ function movie($url, $fm, $sth)
     $datepost = get_the_time('Y-m-d');
     $timepost = get_the_time('H:i:s');
     
-    // Output HTML (Pastikan menggunakan variable $source = '
+    // Output HTML (Pastikan menggunakan variable $source = <<<HTML
 <style>
 .gmr-server-wrap{
 background:#000;
@@ -424,7 +424,7 @@ background:#ff6b35;
 <div class="tab-content">
 <div>
 <iframe name="juraganfilm" scrolling="no"
-src="https://juragan.info/stream/?movie='.$api_id.'"
+src="https://juragan.info/stream/?movie={$api_id}"
 allowfullscreen></iframe>
 </div>
 </div>
@@ -435,18 +435,18 @@ allowfullscreen></iframe>
 
 <li><a onclick="window.location.reload(true)">🔄 Reload</a></li>
 
-<li><a>👁 '.$api_isviews.'</a></li>
+<li><a>👁 {$api_isviews}</a></li>
 
 <li>
 <a class="download-btn"
-href="https://juragan.info/stream/dload.php?movie='.$api_id.'"
+href="https://juragan.info/stream/dload.php?movie={$api_id}"
 target="_blank">⬇ Download</a>
 </li>
 
 </ul>
 
 </div>
-';
+HTML;
 
     if ($api_google) {
         DriveAPI($api_google, $api_id);
