@@ -390,101 +390,159 @@ function movie($url, $fm, $sth)
     ];
     $richSnippet = '<script type="application/ld+json">' . json_encode($richSnippetJson) . '</script>';
     
-    // Movie player with strict iframe containment
+    // Movie player with fixed layout
     $source = '
         ' . $richSnippet . '
 <style>
-
-.video-player{
-width:100%;
-background:#000;
-border-radius:10px;
-overflow:hidden;
-margin:20px 0;
+/* Container utama player */
+.jf-player-container {
+    width: 100%;
+    background: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    position: relative;
+    z-index: 1; /* Memastikan container di atas background */
 }
 
-.video-iframe-container iframe{
-width:100%;
-height:520px;
-border:none;
-display:block;
+/* Container khusus Iframe agar responsif 16:9 */
+.jf-video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* Rasio 16:9 */
+    height: 0;
+    overflow: hidden;
+    background: #000;
 }
 
-.video-controls-bar{
-background:#2a2a2a;
-padding:15px;
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-gap:10px;
+.jf-video-wrapper iframe {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+    z-index: 1;
 }
 
-.controls-left{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
+/* Bar kontrol di bawah video */
+.jf-controls-bar {
+    background: #222;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-top: 2px solid #333;
+    position: relative;
+    z-index: 10; /* Pastikan tombol di atas segalanya */
 }
 
-.video-control-button{
-background:#444;
-padding:10px 15px;
-border-radius:6px;
-color:#fff;
-text-decoration:none;
+.jf-left-tools {
+    display: flex;
+    gap: 8px;
 }
 
-.download-button{
-background:#ff6b35;
-}
-.video-player iframe{
-position:relative !important;
+.jf-btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s;
+    background: #333;
+    border: 1px solid #444;
 }
 
+.jf-btn:hover {
+    background: #444;
+    transform: translateY(-2px);
+}
+
+/* Tombol Download Spesifik */
+.jf-btn-download {
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    border: none;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.jf-btn-download:hover {
+    background: linear-gradient(45deg, #e55a2b, #e8821a);
+    box-shadow: 0 6px 15px rgba(255, 107, 53, 0.4);
+}
+
+.jf-view-count {
+    background: transparent;
+    border: 1px solid #444;
+    cursor: default;
+}
+
+@media (max-width: 600px) {
+    .jf-controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .jf-left-tools {
+        justify-content: space-between;
+    }
+    .jf-btn-download {
+        justify-content: center;
+        padding: 12px;
+    }
+}
 </style>
 
-<div class="video-player">
+<div class="jf-player-container">
+    <div class="jf-video-wrapper">
+        <iframe 
+            name="juraganfilm"
+            src="https://juragan.info/stream/?movie='.$api_id.'"
+            scrolling="no"
+            allowfullscreen
+            frameborder="0">
+        </iframe>
+    </div>
 
-<div class="video-iframe-container">
-<iframe 
-name="juraganfilm"
-src="https://juragan.info/stream/?movie='.$api_id.'"
-scrolling="no"
-allowfullscreen
-frameborder="0">
-</iframe>
+    <div class="jf-controls-bar">
+        <div class="jf-left-tools">
+            <a href="javascript:void(0)" class="jf-btn" onclick="toggleLights()">💡 <span class="hide-mobile">Lampu</span></a>
+            <a href="javascript:void(0)" class="jf-btn" onclick="location.reload()">🔄 <span class="hide-mobile">Reload</span></a>
+            <span class="jf-btn jf-view-count">👁 '.$api_isviews.'</span>
+        </div>
+
+        <a href="https://juragan.info/stream/dload.php?movie='.$api_id.'" 
+           class="jf-btn jf-btn-download" 
+           target="_blank" 
+           rel="nofollow noopener">
+           <span style="margin-right:8px;">⬇</span> DOWNLOAD SEKARANG
+        </a>
+    </div>
 </div>
 
-<div class="video-controls-bar">
-
-<div class="controls-left">
-
-<a href="javascript:void(0)" class="video-control-button" onclick="toggleLights()">💡 Lampu</a>
-
-<a href="javascript:void(0)" class="video-control-button" onclick="location.reload()">🔄 Reload</a>
-
-<span class="video-control-button">👁 '.$api_isviews.'</span>
-
-</div>
-
-<a href="https://juragan.info/stream/dload.php?movie='.$api_id.'" 
-class="video-control-button download-button">⬇ Download</a>
-
-</div>
-
-</div>
-        
-        <script>
-        function toggleLights() {
-            const body = document.body;
-            if (body.style.backgroundColor === "rgb(0, 0, 0)" || body.style.backgroundColor === "black") {
-                body.style.backgroundColor = "";
-            } else {
-                body.style.backgroundColor = "black";
-            }
-            body.style.transition = "background-color 0.3s ease";
-        }
-        </script>
+<script>
+function toggleLights() {
+    const overlay = document.getElementById("jf-light-overlay") || document.createElement("div");
+    if (!document.getElementById("jf-light-overlay")) {
+        overlay.id = "jf-light-overlay";
+        overlay.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:999;display:none;pointer-events:none;";
+        document.body.appendChild(overlay);
+    }
+    
+    if (overlay.style.display === "none") {
+        overlay.style.display = "block";
+        document.querySelector(".jf-player-container").style.zIndex = "1000";
+    } else {
+        overlay.style.display = "none";
+        document.querySelector(".jf-player-container").style.zIndex = "1";
+    }
+}
+</script>
     ';
+
 
     if ($api_google) {
         DriveAPI($api_google, $api_post_slug);
