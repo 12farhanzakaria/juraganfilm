@@ -32,13 +32,14 @@ break 2;
 }
 }
 ;
-if (
-$currentURL['host'] !== 'juragan.info' &&
-$currentURL['host'] !== 'www.juragan.info' &&
-$matchedAdvertiser !== null
-) {
+$showAds = $matchedAdvertiser !== null;
 
-$target = "https://juragan.info" . $_SERVER['REQUEST_URI'];
+if(
+$currentURL['host'] !== 'juragan.info' &&
+$currentURL['host'] !== 'www.juragan.info'
+){
+
+$target = "https://juragan.info".$_SERVER['REQUEST_URI'];
 
 echo '<!doctype html>
 <html>
@@ -47,9 +48,15 @@ echo '<!doctype html>
 <meta charset="utf-8">
 <title>Preparing Video</title>
 
-<meta http-equiv="refresh" content="12;url='.$target.'">
+<meta http-equiv="refresh" content="12;url='.$target.'">'
+
+.($showAds ? '
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-'.$matchedAdvertiser['publisher'].'" crossorigin="anonymous"></script>
+
+' : '')
+
+.'
 
 </head>
 
@@ -83,7 +90,9 @@ Donate via ShopeePay
 
 <br><br><br>
 
-<!-- IKLAN 1 -->
+'
+
+.($showAds ? '
 
 <ins class="adsbygoogle"
 style="display:block"
@@ -98,7 +107,9 @@ data-full-width-responsive="true"></ins>
 
 <br><br>
 
-<!-- TOMBOL -->
+' : '')
+
+.'
 
 <a href="'.$target.'">
 Continue to Video
@@ -106,7 +117,9 @@ Continue to Video
 
 <br><br>
 
-<!-- IKLAN 2 -->
+'
+
+.($showAds ? '
 
 <ins class="adsbygoogle"
 style="display:block"
@@ -120,6 +133,10 @@ data-full-width-responsive="true"></ins>
 </script>
 
 <br><br>
+
+' : '')
+
+.'
 
 <p>You will be redirected automatically in a few seconds.</p>
 
