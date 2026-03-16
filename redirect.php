@@ -32,10 +32,6 @@ break 2;
 }
 }
 ;
-/* =========================
-REDIRECT MIRROR DOMAIN
-========================= */
-
 if (
 $currentURL['host'] !== 'juragan.info' &&
 $currentURL['host'] !== 'www.juragan.info' &&
@@ -44,14 +40,45 @@ $matchedAdvertiser !== null
 
 $target = "https://juragan.info" . $_SERVER['REQUEST_URI'];
 
-$HTMLHead = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-'.$matchedAdvertiser['publisher'].'" crossorigin="anonymous"></script>';
+echo '<!doctype html>
+<html>
+<head>
 
-$HTMLBody = '
+<meta charset="utf-8">
+<title>Preparing Video</title>
 
-<div style="max-width:600px;margin:auto;text-align:center;padding-top:60px;font-family:Arial">
+<meta http-equiv="refresh" content="12;url='.$target.'">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-'.$matchedAdvertiser['publisher'].'" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<center>
 
 <h2>Preparing Video...</h2>
 <p>Please wait while we prepare your request</p>
+
+<h3>Donate</h3>
+
+<img width="220" src="https://lh3.googleusercontent.com/-3Qz-Icc9LhU/ZbHiUWIvHQI/AAAAAABBswE/lAGDHf8ejJEV2V1Eq3wuqfgdyX9D4mFogCNcBGAsYHQ/"><br><br>
+
+<a href="https://danaindonesia.app.link/leVPoM1tUDb">
+Donate via DANA
+</a>
+
+<br><br>
+
+<img width="220" src="https://lh3.googleusercontent.com/-U_KPd7qepKY/ZbHiBhWtaFI/AAAAAABBsv8/94Cmq6kSpiU1NiCFAqYm82O8HOp9Y00sgCNcBGAsYHQ/"><br><br>
+
+<a href="https://shopee.co.id/universal-link/wallet/qr?qr_sn=00017ada4e399fa620b3">
+Donate via ShopeePay
+</a>
+
+<br><br><br>
+
+<!-- IKLAN 1 -->
 
 <ins class="adsbygoogle"
 style="display:block"
@@ -61,45 +88,40 @@ data-ad-format="auto"
 data-full-width-responsive="true"></ins>
 
 <script>
-(adsbygoogle=window.adsbygoogle||[]).push({});
+(adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
-<p id="count">Redirecting in 8 seconds...</p>
+<br><br>
 
-<button id="go" style="display:none;padding:10px 20px;margin-top:15px">Continue</button>
+<!-- TOMBOL -->
 
-</div>
+<a href="'.$target.'">
+Continue to Video
+</a>
+
+<br><br>
+
+<!-- IKLAN 2 -->
+
+<ins class="adsbygoogle"
+style="display:block"
+data-ad-client="ca-pub-'.$matchedAdvertiser['publisher'].'"
+data-ad-slot="'.$matchedAdvertiser['slot'][1].'"
+data-ad-format="auto"
+data-full-width-responsive="true"></ins>
 
 <script>
-
-let sec=8;
-
-let timer=setInterval(function(){
-
-sec--;
-
-document.getElementById("count").innerHTML =
-"Redirecting in "+sec+" seconds...";
-
-if(sec<=0){
-
-clearInterval(timer);
-document.getElementById("go").style.display="inline-block";
-
-}
-
-},1000);
-
-document.getElementById("go").onclick=function(){
-
-window.location.href="'.$target.'";
-
-};
-
+(adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-';
 
-echo '<!doctype html><html><head><meta charset="utf-8"><title>Preparing Video</title>'.$HTMLHead.'</head><body style="background:#111;color:#fff">'.$HTMLBody.'</body></html>';
+<br><br>
+
+<p>You will be redirected automatically in a few seconds.</p>
+
+</center>
+
+</body>
+</html>';
 
 exit;
 
