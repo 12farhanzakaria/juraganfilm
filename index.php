@@ -169,23 +169,29 @@ $parseHTTP['status'] = 403;
 }
 }
 if ($parseHTTP['header']['content-type'] === 'text/html; charset=utf-8') {
-if ($matchedAdvertiser !== null) {
-$HTMLHead .= ' <link crossorigin="anonymous" href="https://pagead2.googlesyndication.com" rel="preconnect" /> <link href="https://pagead2.googlesyndication.com" rel="dns-prefetch" /> <script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-' . $matchedAdvertiser['publisher'] . '"> </script> <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>';
+    if ($matchedAdvertiser !== null) {
+        $HTMLHead .= ' <link crossorigin="anonymous" href="https://pagead2.googlesyndication.com" rel="preconnect" /> <link href="https://pagead2.googlesyndication.com" rel="dns-prefetch" /> <script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-' . $matchedAdvertiser['publisher'] . '"> </script> <style>ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; }</style>';
+    }
+
+    if ($currentVideoPath[0] === 'download') {
+        $HTMLHead .= ' <meta content="10" http-equiv="refresh" />';
+        $parseHTTP['header']['x-frame-options'] = 'DENY';
+    }
+
+    $parseHTTP['body'] = '<!doctype html> <html class="notranslate" lang="en-US" translate="no"> <head> ... </head> ' . $HTMLBody . ' </body> </html>';
+    $parseHTTP['status'] = 200;
 }
-if ($currentVideoPath[0] === 'download') {
-$HTMLHead .= ' <meta content="10" http-equiv="refresh" />';
-$parseHTTP['header']['x-frame-options'] = 'DENY';
-}
-$parseHTTP['body'] = '<!doctype html> <html class="notranslate" lang="en-US" translate="no"> <head> <link crossorigin="anonymous" href="https://lh3.googleusercontent.com" rel="preconnect" /> <link href="https://lh3.googleusercontent.com" rel="dns-prefetch" /> <link crossorigin="anonymous" href="https://drive-thirdparty.googleusercontent.com" rel="preconnect" /> <link href="https://drive-thirdparty.googleusercontent.com" rel="dns-prefetch" /> <link href="https://drive-thirdparty.googleusercontent.com/16/type/video" rel="icon" type="image/png" /> <meta charset="utf-8" /> <meta content="The service exceeds the download and streaming quota of the video." name="description"> <meta content="height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover, width=device-width" name="viewport" /> <meta content="nofollow, noindex" name="robots" /> <meta content="notranslate" name="google" /> ' . $HTMLHead . ' <title>' . $titlePage . '</title> </head> ' . $HTMLBody . ' </body> </html>';
-$parseHTTP['status'] = 200;
-}
+
 http_response_code($parseHTTP['status']);
+
 foreach ($parseHTTP['header'] as $key => $value) {
-header($key . ': ' . $value);
+    header($key . ': ' . $value);
 }
+
 if (isset($parseHTTP['body'])) {
-echo $parseHTTP['body'];
+    echo $parseHTTP['body'];
 }
+
 } else {
-http_response_code(405);
+    http_response_code(405);
 }
