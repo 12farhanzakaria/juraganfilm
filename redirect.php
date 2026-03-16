@@ -57,7 +57,12 @@ echo '<!doctype html>
 
 <center>
 
-<h2>Preparing Video...</h2>
+<h2>⏳ Preparing Video...</h2>
+
+<progress style="width:300px;"></progress>
+
+<br><br>
+
 <p>Please wait while we prepare your request</p>
 
 <h3>Donate</h3>
